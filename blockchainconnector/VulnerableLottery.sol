@@ -57,7 +57,7 @@ contract Lottery{
     }
 
     // register a team
-    function registerTeam(address _walletAddress,string _teamName, string _password){
+    function registerTeam(address _walletAddress,string _teamName, string _password){ // USE OF _walletAddress WITH  NO SENDER CHECKS MEANS ANYONE CAN OVERWRITE ANOTHER
     	teams.push(_walletAddress);
     	passwords.push(_password);
     	teamNames[_walletAddress] = _teamName;
@@ -74,7 +74,7 @@ contract Lottery{
 
 
     // make your guess , return a success flag
-    function makeAGuess(address _team,uint256 _guess) external payable  returns (bool){
+    function makeAGuess(address _team,uint256 _guess) external payable  returns (bool){ // _team IS NOT CHECKED, ANYONE CAN GUESS FOR ANYONE ELSE
 
     	if (checkThatPaid()==false){
     		return false;
