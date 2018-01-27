@@ -1,11 +1,11 @@
 pragma solidity ^0.4.4;
 
-contract JackERC20 {
+contract JackCoin {
     uint public supply;
     mapping (address => uint) balances;
     mapping (address => mapping (address => uint)) allowances;
 
-    function JackERC(uint _supply) {
+    function JackCoin(uint _supply) {
         balances[msg.sender] = _supply;
         supply = _supply;
     }
