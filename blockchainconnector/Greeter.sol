@@ -1,63 +1,27 @@
 pragma solidity ^0.4.4;
 
-contract Owned {
-    address public owner;
+contract mortal {
+    /* Define variable owner of the type address */
+    address owner;
 
-    modifier only_owner() {
-        if (msg.sender == owner) {
-            _;
-        }
-        else throw;
-    }
+    /* This function is executed at initialization and sets the owner of the contract */
+    function mortal() { owner = msg.sender; }
 
-   event OwnerChanged(address oldOwner,address newOwner);
-
-    function Owned() {
-        owner = msg.sender;
-    }
-
-    function changeOwner(address _newOwner) external only_owner {
-        address oldOwner = owner;
-        owner = _newOwner;
-        OwnerChanged(oldOwner,_newOwner);
-    }
+    /* Function to recover the funds on the contract */
+    function kill() { if (msg.sender == owner) selfdestruct(owner); }
 }
 
-contract GreeterMap is Owned {
+contract greeter is mortal {
+    /* Define variable greeting of the type string */
     string greeting;
-    uint public greeting_count = 0;
-    mapping (uint => string) greeting_history;
-
-    event Change(uint change_no, string greeting);
-
-    function Greeter() {
-        greeting_history[0] = "Hello Workshop";
-     }
-
-    function greet(uint i) constant returns (string){
-        return greeting_history[i];
+    
+    /* This runs when the contract is executed */
+    function greeter(string _greeting) public {
+        greeting = _greeting;
     }
 
-    function changeGreeting(string _newGreeting) only_owner returns (uint) {
-        greeting_history[++greeting_count] = _newGreeting;
-        Change(greeting_count-1, _newGreeting);
-        return greeting_count-1;
-    }
-}
-
-contract GreeterArray is Owned {
-    string greeting;
-    string[] greeting_history;
-
-    function Greeter() {
-        greeting_history.push("Hello Workshop");
-     }
-
-    function greet(uint i) constant returns (string){
-        return greeting_history[i];
-    }
-
-    function changeGreeting(string _newGreeting) only_owner {
-        greeting_history.push(_newGreeting);
+    /* Main function */
+    function greet() constant returns (string) {
+        return greeting;
     }
 }
