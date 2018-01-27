@@ -5,9 +5,9 @@ contract JackCoin {
     mapping (address => uint) balances;
     mapping (address => mapping (address => uint)) allowances;
 
-    function JackCoin(uint _supply) {
-        balances[msg.sender] = _supply;
-        supply = _supply;
+    function JackCoin() {
+        balances[msg.sender] = 1000000;
+        supply = 1000000;
     }
 
     function totalSupply() constant returns (uint256 totalSupply) {
